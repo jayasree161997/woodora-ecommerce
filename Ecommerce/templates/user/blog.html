@@ -1,0 +1,212 @@
+{% extends "layouts/mainsecond.html" %}
+
+{% load static %}
+
+{% load cart_extras %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <style>
+        .cart-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cart-summary {
+            width: 80%;
+            border: 1px solid #ddd;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .checkout-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .add-address {
+            width: 80%;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .add-address form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .add-address input {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .add-address button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function updatePrice(itemID, price, stock) {
+            let quantity = document.getElementById('quantity-' + itemID).value;
+            if (quantity > stock) {
+                alert('Maximum available stock is ' + stock);
+                document.getElementById('quantity-' + itemID).value = stock;
+                quantity = stock;
+            }
+            let total = price * quantity;
+            document.getElementById('total-' + itemID).innerText = '₹' + total.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+    <h1>Your Shopping Cart</h1>
+    <div class="cart-page">
+        <div class="cart-items">
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <img src="{{ item.product.main_image.url }}" alt="{{ item.product.name }}"  class="product-image">
+                <div class="item-details">
+                    <h4>{{ item.product.name }} </h4>
+                    <p>Price: ₹{{ item.product.price }}</p>
+                    <p>Stock: {{ item.product.stock }}</p>
+                    <p>
+                        Quantity: 
+                        <input type="number" id="quantity-{{ item.id }}" name="quantity" value="{{ item.quantity }}" min="1" max="5" onchange="updatePrice('{{ item.id }}', {{ item.product.price }}, {{ item.product.stock }})">
+                    </p>
+                    <p>Total: <span id="total-{{ item.id }}">₹{{ item.quantity|multiply:item.product.price }}</span></p>
+                    <a href="{% url 'remove_from_cart' item.product.id %}">Remove</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <p>Total Items: {{ total_items }}</p>
+            <p>Total Price: ₹{{ total_cost }}</p>
+            {% comment %} {% if cart.coupon_code %} {% endcomment %}
+            <p>Coupon Applied: {{ cart.coupon_code }}</p>
+            <p>Discount: -₹{{ cart.discount_amount }}</p>
+            {% comment %} <p><strong>Total after Discount: ₹{{ total_cost - cart.discount_amount }}</strong></p> {% endcomment %}
+{% comment %} 
+    <p><strong>Total after Discount: ₹{{ total_cost|default:0|floatformat:2 }} - ₹{{ cart.discount_amount|default:0|floatformat:2 }}</strong></p> {% endcomment %}
+    <p><strong>Total after Discount: ₹{{ total_cost|default:0|floatformat:2 }}</strong></p>
+    {% if cart.coupon_code %}
+        <p>Coupon Applied: <strong>{{ cart.coupon_code }}</strong></p>
+        <p>Discount: -₹{{ cart.discount_amount|default:0|floatformat:2 }}</p>
+        <p><strong>Final Total: ₹{{ total_cost|default:0|floatformat:2|add:-cart.discount_amount }}</strong></p>
+    {% comment %} {% endif %} {% endcomment %}
+
+            
+            {% else %}
+            <form method="post" action="{% url 'apply_coupon' %}">
+                {% csrf_token %}
+                {{ coupon_form.as_p }}
+                <button type="submit">Apply Coupon</button>
+            </form>
+            {% endif %}
+            <a href="{% url 'checkoutpage' %}" class="checkout-button">Proceed to Checkout</a>
+        </div>
+    </div>
+</body>
+</html> 
+
+
+{% endblock body %} 
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <h2>Checkout</h2>
+    <form id="checkoutForm" method="post" action="{% url 'place_order' %}">
+        {% csrf_token %}
+        
+        <h3>Select Address</h3>
+        {% for address in addresses %}
+            <div class="address-group">
+                <input type="radio" name="address_id" value="{{ address.id }}" id="address_{{ address.id }}" required>
+                <label for="address_{{ address.id }}">
+                    {{ address.first_name }} {{ address.last_name }}<br>
+                    {{ address.street_address }}<br>
+                    {{ address.house_no }}<br>
+                    {{ address.postcode }}<br>
+                    {{ address.mobile }}<br>
+                    <a href="{% url 'edit_address' address.id %}">Edit</a>
+                </label>
+            </div>
+        {% endfor %}
+        <div><a href="{% url 'add_Address' %}">Add New Address</a></div>
+
+        <h3>Product Summary</h3>
+        <div class="product-summary">
+            {% for item in cart_items %}
+                <div>{{ item.item.quantity }} x {{ item.item.product.name }} - ₹{{ item.item_total }}</div>
+            {% endfor %}
+            <div><strong>Number of items: {{ cart_items|length }}</strong></div>
+            <div class="total-price"><strong>Total: ₹{{ total_price }}</strong></div>
+            <div class="discount-amount"><strong>Discount Amount: ₹{{ discount_amount }}</strong></div>
+            <div class="final-price"><strong>Final Price: ₹{{ final_price }}</strong></div>
+        </div>
+
+        <h3>Select Payment Option</h3>
+        <div class="payment-option">
+            <div>
+                <input type="radio" name="payment_option" value="cash_on_delivery" id="cash_on_delivery" required>
+                <label for="cash_on_delivery">Cash on Delivery</label>
+            </div>
+            <div>
+                <input type="radio" name="payment_option" value="razorpay" id="razorpay" required>
+                <label for="razorpay">Razorpay</label>
+            </div>
+        </div>
+
+        <button type="submit">Place Order</button>
+    </form>
+</div>
