@@ -955,7 +955,8 @@ def order_success(request):
 
 
 
-WKHTMLTOPDF_PATH = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+# WKHTMLTOPDF_PATH = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+WKHTMLTOPDF_PATH = '/usr/local/bin/wkhtmltopdf'
 
 # Ensure the executable exists
 if not os.path.exists(WKHTMLTOPDF_PATH):
