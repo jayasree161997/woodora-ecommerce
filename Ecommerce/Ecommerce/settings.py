@@ -42,7 +42,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.108.63.103']
 
 
 # Application definition
@@ -145,6 +145,9 @@ DATABASES = {
   "default": {
      "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+        "USER": 'admin',
+        "PASSWORD': 'idhal@19#2022',
+        "HOST": 'woodora-ecommerce.c5iaosgak9m1.ap-south-1.rds.amazonaws.com'
      }
 }
 
