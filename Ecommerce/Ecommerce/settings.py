@@ -146,7 +146,7 @@ DATABASES = {
      "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
         "USER": 'admin',
-        "PASSWORD': 'idhal@19#2022',
+        "PASSWORD": "idhal@19#2022",
         "HOST": 'woodora-ecommerce.c5iaosgak9m1.ap-south-1.rds.amazonaws.com'
      }
 }
