@@ -197,7 +197,7 @@ class Order(models.Model):
     cod_transaction_id = models.CharField(max_length=100, blank=True, null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     coupon_code = models.CharField(max_length=50, blank=True, null=True)
-    discount_amount = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     razorpay_order_id = models.CharField(max_length=100, blank=True, null=True)
     razorpay_payment_id = models.CharField(max_length=100, blank=True, null=True)
     paypal_payment_id = models.CharField(max_length=100, blank=True, null=True)
