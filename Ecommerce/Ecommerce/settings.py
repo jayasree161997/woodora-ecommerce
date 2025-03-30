@@ -42,7 +42,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['3.108.63.103']
+ALLOWED_HOSTS = ['woodora.live', 'www.woodora.live', '3.108.63.103']
 
 
 # Application definition
@@ -114,6 +114,15 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True   
+
+
+CSRF_TRUSTED_ORIGINS = ['https://woodora.live', 'https://www.woodora.live']
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 
 ROOT_URLCONF = 'Ecommerce.urls'
