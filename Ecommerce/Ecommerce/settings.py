@@ -42,7 +42,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '13.232.244.103 ' ]
+ALLOWED_HOSTS = [ '13.232.244.103:8000' ]
 
 
 # Application definition
