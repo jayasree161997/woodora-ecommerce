@@ -156,7 +156,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
         "USER": 'admin',
         "PASSWORD": "Jayasree123",
-        "HOST": 'ecommerce3.c5iaosgak9m1.ap-south-1.rds.amazonaws.com'
+        "HOST": 'ecommerce3.c5iaosgak9m1.ap-south-1.rds.amazonaws.com',
+        "PORT": '3306',
      }
 }
 
