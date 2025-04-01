@@ -222,9 +222,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = '/home/ubuntu/woodora-ecommerce/staticfiles'
 STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
+    # os.path.join(BASE_DIR,'static')
+ '/home/ubuntu/woodora-ecommerce/Ecommerce/static',
 
 ]
 MEDIA_URL = '/media/'
