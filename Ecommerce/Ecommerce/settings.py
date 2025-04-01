@@ -42,8 +42,16 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = [ 'woodora.live', 'www.woodora.live', '13.232.244.103:8000' ]
-ALLOWED_HOSTS = ['13.232.244.103', 'localhost', '127.0.0.1']
+ # ALLOWED_HOSTS = [ 'woodora.live', 'www.woodora.live', '13.232.244.103:8000' ]
+# ALLOWED_HOSTS = ['13.232.244.103', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    "woodora.live",   # Your domain name
+    "www.woodora.live",  # If using www subdomain
+    "13.232.247.180",  # Your server's public IP (replace with your actual IP)
+    "127.0.0.1",  # Localhost (for internal requests)
+    "localhost",
+]
+
 
 
 
