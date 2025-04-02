@@ -964,7 +964,8 @@ if not os.path.exists(WKHTMLTOPDF_PATH):
     raise FileNotFoundError(f"wkhtmltopdf not found at: {WKHTMLTOPDF_PATH}")
 
 # Configure pdfkit
-config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
+# config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
+config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
 
 def generate_invoice_data(order_id):
     try:
