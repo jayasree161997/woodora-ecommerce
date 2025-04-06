@@ -25,8 +25,12 @@ TEMPLATE_DIR= os.path.join(BASE_DIR,'templates')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-f0-#4599@c&!&4(d46j=6st08$*+r$@dy7fqu2a8izhpg#(ly@'
 
-RAZORPAY_API_KEY = 'rzp_test_MAimzLa32DUYt6 '
-RAZORPAY_API_SECRET = 'qbDDZBXaEQPNG72T9ZPVPytC'
+
+
+import os
+
+RAZORPAY_API_KEY = os.getenv("RAZORPAY_API_KEY", "rzp_test_MAimzLa32DUYt6")
+RAZORPAY_API_SECRET = os.getenv("RAZORPAY_API_SECRET", "qbDDZBXaEQPNG72T9ZPVPytC")
 
 
 
@@ -167,8 +171,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
         "USER": 'admin',
         "PASSWORD": "Jayasree123",
-        "HOST": 'ecommerce3.c5iaosgak9m1.ap-south-1.rds.amazonaws.com',
-        "PORT": '3306',
+        # "HOST": 'ecommerce3.c5iaosgak9m1.ap-south-1.rds.amazonaws.com',
+        # "PORT": '3306',
      }
 }
 
