@@ -257,7 +257,7 @@ def cart_detail(request):
 
     # Handle coupon discounts
     coupon_id = request.session.get("coupon_id")
-    if coupon_id:
+    if coupon_id and not cart.coupon_code:
         try:
             coupon = Coupon.objects.get(
                 id=coupon_id,
