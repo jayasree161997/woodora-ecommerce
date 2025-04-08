@@ -955,17 +955,27 @@ def order_success(request):
 
 
 
-# WKHTMLTOPDF_PATH = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
-WKHTMLTOPDF_PATH = "/usr/local/bin/wkhtmltopdf"
+
+# WKHTMLTOPDF_PATH = "/usr/local/bin/wkhtmltopdf"
 
 
-# Ensure the executable exists
-if not os.path.exists(WKHTMLTOPDF_PATH):
-    raise FileNotFoundError(f"wkhtmltopdf not found at: {WKHTMLTOPDF_PATH}")
+# # Ensure the executable exists
+# if not os.path.exists(WKHTMLTOPDF_PATH):
+#     raise FileNotFoundError(f"wkhtmltopdf not found at: {WKHTMLTOPDF_PATH}")
 
-# Configure pdfkit
-# config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
-config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
+# # Configure pdfkit
+
+# config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')
+import shutil
+
+# Dynamically find wkhtmltopdf path
+WKHTMLTOPDF_PATH = shutil.which('wkhtmltopdf')
+
+if not WKHTMLTOPDF_PATH:
+    raise FileNotFoundError("wkhtmltopdf not found in PATH")
+
+# Configure pdfkit with the found path
+config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_PATH)
 
 def generate_invoice_data(order_id):
     try:
