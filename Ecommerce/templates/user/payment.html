@@ -17,7 +17,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const options = {
-                key: "{{ rzp_test_MAimzLa32DUYt6 }}",  // ✅ Fixed: Pass from backend
+               key: "{{ razorpay_key }}",  // ✅ Fixed: Pass from backend
                 amount: "{{ amount|floatformat:0|add:0 }}",  // ✅ Fixed: Ensure integer
                 currency: "INR",
                 order_id: "{{ order_id }}", 
