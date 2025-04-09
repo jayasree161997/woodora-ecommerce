@@ -21,11 +21,11 @@ RAZORPAY_SECRET = "qbDDZBXaEQPNG72T9ZPVPytC"
 
 
 
+razorpay_client = razorpay.Client(auth=("rzp_test_MAimzLa32DUYt6", "qbDDZBXaEQPNG72T9ZPVPytC"))
 
-# client = razorpay.Client(auth=("rzp_test_MAimzLa32DUYt6", "qbDDZBXaEQPNG72T9ZPVPytC"))
 
 # Initialize Razorpay client
-razorpay_client = razorpay.Client(auth=("rzp_test_MAimzLa32DUYt6", "qbDDZBXaEQPNG72T9ZPVPytC"))
+
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
